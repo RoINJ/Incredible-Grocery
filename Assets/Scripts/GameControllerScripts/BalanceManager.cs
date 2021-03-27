@@ -11,23 +11,31 @@ namespace GameControllerScripts
         [SerializeField] private AudioClip moneySound;
 
         private int _totalMoney;
+
         public int TotalMoney
         {
             get => _totalMoney;
             set
             {
-                AudioSource.PlayClipAtPoint(moneySound, transform.position);
-                StartCoroutine(ScoreFade(_totalMoney, value));
-                _totalMoney = value;
+                if (value > _totalMoney)
+                {
+                    SoundManager.PlaySound(moneySound, transform.position);
+                    StartCoroutine(ScoreFade(_totalMoney, value - _totalMoney));
+                    _totalMoney = value;
+
+                    if (SettingsManager.CurrentBalance != value)
+                    {
+                        SettingsManager.CurrentBalance = value;
+                    }
+                }
             }
         }
 
-        private IEnumerator ScoreFade(int oldScore, int deltaScore) 
+        private IEnumerator ScoreFade(int oldScore, int deltaScore)
         {
-            var acceleration = 10.0 * deltaScore * deltaScore;
+            var acceleration = 20.0 * deltaScore * deltaScore;
             var k = Math.Log(1 + acceleration);
-        
-            var delay = Time.deltaTime * 1000;
+
             for (float i = 0; i <= 1; i += Time.deltaTime)
             {
                 var tmpScore = Math.Log(1 + acceleration * i) * deltaScore / k;
@@ -36,6 +44,12 @@ namespace GameControllerScripts
             }
 
             balanceLabel.text = $"$ {oldScore + deltaScore}";
+        }
+
+        private void Start()
+        {
+            _totalMoney = SettingsManager.CurrentBalance;
+            balanceLabel.text = $"$ {_totalMoney}";
         }
     }
 }
