@@ -48,7 +48,7 @@ public class StorageManager : MonoBehaviour
 
     private void OnToggleValueChanged(bool isChecked, int index)
     {
-        SoundManager.PlaySound(selectProductSound, transform.position);
+        SoundManager.Instanse.PlaySound(selectProductSound, transform.position);
         
         if (isChecked)
         {

@@ -1,26 +1,52 @@
-using System;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static void SetBackgroundMusic(bool value)
-    {
-        var audioSource = GameObject.FindWithTag("GameController")
-            .GetComponent<AudioSource>();
-
-        audioSource.mute = !value;
-    }
+    private AudioSource _audioSource;
     
-    public static void PlaySound(AudioClip audioClip, Vector3 position)
+    public static SoundManager Instanse { get; private set; }
+
+    public bool IsSoundsEnabled { get; set; }
+
+    private bool _isMusicEnabled;
+
+    public bool IsMusicEnabled
     {
-        if (SettingsManager.IsSoundsEnabled)
+        get => _isMusicEnabled;
+        set
         {
+            _isMusicEnabled = value;
+            _audioSource.mute = !value;
+        }
+    }
+
+    public void PlaySound(AudioClip audioClip, Vector3 position)
+    {
+        if (IsSoundsEnabled)
+        {
+            var timeScale = Time.timeScale;
+            Time.timeScale = 1;
+            
             AudioSource.PlayClipAtPoint(audioClip, position);
+            
+            Time.timeScale = timeScale;
         }
     }
 
     private void Start()
     {
-        SetBackgroundMusic(SettingsManager.IsMusicEnabled);
+        Instanse = this;
+        
+        _audioSource = GameObject.FindWithTag("GameController")
+            .GetComponent<AudioSource>();
+        
+        IsSoundsEnabled = SettingsManager.IsSoundsEnabled;
+        IsMusicEnabled = SettingsManager.IsMusicEnabled;
+    }
+
+    private void OnDestroy()
+    {
+        SettingsManager.IsSoundsEnabled = IsSoundsEnabled;
+        SettingsManager.IsMusicEnabled = IsMusicEnabled;
     }
 }

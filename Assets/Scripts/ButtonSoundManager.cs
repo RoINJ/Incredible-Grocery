@@ -7,6 +7,6 @@ public class ButtonSoundManager : MonoBehaviour
     
     void Start()
     {
-        GetComponent<Button>().onClick.AddListener(() => SoundManager.PlaySound(buttonSound, transform.position));
+        GetComponent<Button>().onClick.AddListener(() => SoundManager.Instanse.PlaySound(buttonSound, transform.position));
     }
 }

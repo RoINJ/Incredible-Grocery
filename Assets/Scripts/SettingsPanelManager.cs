@@ -33,8 +33,8 @@ public class SettingsPanelManager : MonoBehaviour
 
     public void Save()
     {
-        SettingsManager.IsMusicEnabled = _isMusicEnabled;
-        SettingsManager.IsSoundsEnabled = _isSoundsEnabled;
+        SoundManager.Instanse.IsMusicEnabled = _isMusicEnabled;
+        SoundManager.Instanse.IsSoundsEnabled = _isSoundsEnabled;
         
         gameObject.SetActive(false);
     }
@@ -54,8 +54,8 @@ public class SettingsPanelManager : MonoBehaviour
         
         Time.timeScale = 0;
 
-        IsMusicEnabled = SettingsManager.IsMusicEnabled;
-        IsSoundsEnabled = SettingsManager.IsSoundsEnabled;
+        IsMusicEnabled = SoundManager.Instanse.IsMusicEnabled;
+        IsSoundsEnabled = SoundManager.Instanse.IsSoundsEnabled;
     }
 
     private void OnDisable()

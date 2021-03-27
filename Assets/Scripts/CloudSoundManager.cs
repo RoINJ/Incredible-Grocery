@@ -7,11 +7,11 @@ public class CloudSoundManager : MonoBehaviour
 
     private void Start()
     {
-        SoundManager.PlaySound(appearanceSound, transform.position);
+        SoundManager.Instanse.PlaySound(appearanceSound, transform.position);
     }
     
     private void OnDestroy()
     {
-        SoundManager.PlaySound(disappearanceSound, transform.position);
+        SoundManager.Instanse.PlaySound(disappearanceSound, transform.position);
     }
 }

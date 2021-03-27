@@ -11,11 +11,7 @@ public static class SettingsManager
     public static bool IsMusicEnabled
     {
         get => PlayerPrefs.GetInt(nameof(IsMusicEnabled)) == 1;
-        set
-        {
-            PlayerPrefs.SetInt(nameof(IsMusicEnabled), value ? 1 : 0);
-            SoundManager.SetBackgroundMusic(value);
-        }
+        set => PlayerPrefs.SetInt(nameof(IsMusicEnabled), value ? 1 : 0);
     }
     
     public static bool IsSoundsEnabled
