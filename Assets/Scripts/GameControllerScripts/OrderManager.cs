@@ -44,7 +44,8 @@ namespace GameControllerScripts
 
             var countOfCorrectProducts = results.Count(x => x);
             var isOrderCompleted = countOfCorrectProducts == OrderSize;
-            _dialogManager.ShowBuyerReaction(isOrderCompleted);
+            
+            await _dialogManager.ShowBuyerReaction(isOrderCompleted);
 
             var orderCost = isOrderCompleted
                 ? countOfCorrectProducts * 10 * 2

@@ -19,4 +19,10 @@ public static class SettingsManager
         get => PlayerPrefs.GetInt(nameof(IsSoundsEnabled)) == 1;
         set => PlayerPrefs.SetInt(nameof(IsSoundsEnabled), value ? 1 : 0);
     }
+    
+    public static bool HasBeenLaunchedBefore
+    {
+        get => PlayerPrefs.GetInt(nameof(HasBeenLaunchedBefore)) == 1;
+        set => PlayerPrefs.SetInt(nameof(HasBeenLaunchedBefore), value ? 1 : 0);
+    }
 }

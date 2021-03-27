@@ -52,8 +52,8 @@ namespace GameControllerScripts
             _audioSource = GameObject.FindWithTag("GameController")
                 .GetComponent<AudioSource>();
         
-            IsSoundsEnabled = SettingsManager.IsSoundsEnabled;
-            IsMusicEnabled = SettingsManager.IsMusicEnabled;
+            IsSoundsEnabled = SettingsManager.IsSoundsEnabled || !SettingsManager.HasBeenLaunchedBefore;
+            IsMusicEnabled = SettingsManager.IsMusicEnabled || !SettingsManager.HasBeenLaunchedBefore;
         }
     }
 }
