@@ -7,11 +7,11 @@ public class CloudSoundManager : MonoBehaviour
 
     private void Start()
     {
-        AudioSource.PlayClipAtPoint(appearanceSound, transform.position);
+        SoundManager.PlaySound(appearanceSound, transform.position);
     }
     
     private void OnDestroy()
     {
-        AudioSource.PlayClipAtPoint(disappearanceSound, transform.position);
+        SoundManager.PlaySound(disappearanceSound, transform.position);
     }
 }
