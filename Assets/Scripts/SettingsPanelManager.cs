@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class SettingsPanelManager : MonoBehaviour
 {
+    [SerializeField] private Button soundButton;
+    [SerializeField] private Button musicButton;
+    
     [SerializeField] private Sprite buttonOn;
     [SerializeField] private Sprite buttonOff;
-
-    private Button _soundButton;
-    private Button _musicButton;
     
     private bool _isMusicEnabled;
     private bool IsMusicEnabled
@@ -17,7 +17,7 @@ public class SettingsPanelManager : MonoBehaviour
         set
         {
             _isMusicEnabled = value;
-            SetButtonState(_musicButton, value);
+            SetButtonState(musicButton, value);
         }
     }
 
@@ -28,7 +28,7 @@ public class SettingsPanelManager : MonoBehaviour
         set
         {
             _isSoundsEnabled = value;
-            SetButtonState(_soundButton, value);
+            SetButtonState(soundButton, value);
         }
     }
 
@@ -40,19 +40,18 @@ public class SettingsPanelManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void ToggleSound()
+    {
+        IsSoundsEnabled = !IsSoundsEnabled;
+    }
+    
+    public void ToggleMusic()
+    {
+        IsMusicEnabled = !IsMusicEnabled;
+    }
+
     private void OnEnable()
     {
-        if (_soundButton == null || _musicButton == null)
-        {
-            var buttons = GetComponentsInChildren<Button>();
-        
-            _soundButton = buttons[0];
-            _musicButton = buttons[1];
-        
-            _soundButton.onClick.AddListener(()=> IsSoundsEnabled = !IsSoundsEnabled);
-            _musicButton.onClick.AddListener(()=> IsMusicEnabled = !IsMusicEnabled);
-        }
-        
         Time.timeScale = 0;
 
         IsMusicEnabled = SoundManager.Instanse.IsMusicEnabled;
