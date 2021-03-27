@@ -1,52 +1,55 @@
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+namespace GameControllerScripts
 {
-    private AudioSource _audioSource;
+    public class SoundManager : MonoBehaviour
+    {
+        private AudioSource _audioSource;
     
-    public static SoundManager Instanse { get; private set; }
+        public static SoundManager Instanse { get; private set; }
 
-    public bool IsSoundsEnabled { get; set; }
+        public bool IsSoundsEnabled { get; set; }
 
-    private bool _isMusicEnabled;
+        private bool _isMusicEnabled;
 
-    public bool IsMusicEnabled
-    {
-        get => _isMusicEnabled;
-        set
+        public bool IsMusicEnabled
         {
-            _isMusicEnabled = value;
-            _audioSource.mute = !value;
+            get => _isMusicEnabled;
+            set
+            {
+                _isMusicEnabled = value;
+                _audioSource.mute = !value;
+            }
         }
-    }
 
-    public void PlaySound(AudioClip audioClip, Vector3 position)
-    {
-        if (IsSoundsEnabled)
+        public void PlaySound(AudioClip audioClip, Vector3 position)
         {
-            var timeScale = Time.timeScale;
-            Time.timeScale = 1;
+            if (IsSoundsEnabled)
+            {
+                var timeScale = Time.timeScale;
+                Time.timeScale = 1;
             
-            AudioSource.PlayClipAtPoint(audioClip, position);
+                AudioSource.PlayClipAtPoint(audioClip, position);
             
-            Time.timeScale = timeScale;
+                Time.timeScale = timeScale;
+            }
         }
-    }
 
-    private void Start()
-    {
-        Instanse = this;
+        private void Start()
+        {
+            Instanse = this;
         
-        _audioSource = GameObject.FindWithTag("GameController")
-            .GetComponent<AudioSource>();
+            _audioSource = GameObject.FindWithTag("GameController")
+                .GetComponent<AudioSource>();
         
-        IsSoundsEnabled = SettingsManager.IsSoundsEnabled;
-        IsMusicEnabled = SettingsManager.IsMusicEnabled;
-    }
+            IsSoundsEnabled = SettingsManager.IsSoundsEnabled;
+            IsMusicEnabled = SettingsManager.IsMusicEnabled;
+        }
 
-    private void OnDestroy()
-    {
-        SettingsManager.IsSoundsEnabled = IsSoundsEnabled;
-        SettingsManager.IsMusicEnabled = IsMusicEnabled;
+        private void OnDestroy()
+        {
+            SettingsManager.IsSoundsEnabled = IsSoundsEnabled;
+            SettingsManager.IsMusicEnabled = IsMusicEnabled;
+        }
     }
 }
