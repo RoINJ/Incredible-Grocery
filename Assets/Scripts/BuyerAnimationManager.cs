@@ -1,3 +1,5 @@
+using System;
+using GameControllerScripts;
 using UnityEngine;
 
 public class BuyerAnimationManager : MonoBehaviour
@@ -9,6 +11,8 @@ public class BuyerAnimationManager : MonoBehaviour
     private Vector3 _moveVector;
     private Vector3 _spawnPosition;
     private Vector3 _startPosition;
+
+    private BuyerManager _buyerManager;
 
     public bool IsAnimationGoing { get; private set; }
     public bool IsLeaving { get; private set; }
@@ -26,6 +30,9 @@ public class BuyerAnimationManager : MonoBehaviour
 
     private void Start()
     {
+        _buyerManager = GameObject.FindWithTag("GameController")
+            .GetComponent<BuyerManager>();
+        
         _startPosition = transform.position;
         _finalPostion = GameObject.FindWithTag("BuyerFinalPosition").transform.position;
 
@@ -41,6 +48,7 @@ public class BuyerAnimationManager : MonoBehaviour
             if (IsLeaving)
             {
                 Destroy(gameObject);
+                _buyerManager.SpawnBuyer();
             }
             
             IsAnimationGoing = false;

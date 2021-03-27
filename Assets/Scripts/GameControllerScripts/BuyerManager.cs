@@ -9,26 +9,12 @@ namespace GameControllerScripts
         [SerializeField] private GameObject buyerPrefab;
 
         private BuyerAnimationManager _buyerAnimationManager;
+        private OrderManager _orderManager;
 
-        private async void Start()
+        public async void SpawnBuyer()
         {
-            await Task.Delay(500);
-            SpawnBuyer();
-        }
-
-        private void Update()
-        {
-            if (_buyerAnimationManager != null)
-            {
-                if (!_buyerAnimationManager.IsAnimationGoing && !_buyerAnimationManager.IsLeaving)
-                {
-                    _buyerAnimationManager = null;
-                }
-            }
-        }
-
-        public void SpawnBuyer()
-        {
+            await Task.Delay(1000);
+            
             var buyerInstanse = Instantiate(buyerPrefab, buyerPrefab.transform.position, Quaternion.identity);
             _buyerAnimationManager = buyerInstanse.GetComponent<BuyerAnimationManager>();
         }
@@ -38,6 +24,25 @@ namespace GameControllerScripts
             var buyerInstanse = GameObject.FindWithTag("Buyer");
             _buyerAnimationManager = buyerInstanse.GetComponent<BuyerAnimationManager>();
             _buyerAnimationManager.LeaveBuyer();
+        }
+        
+        private void Start()
+        {
+            _orderManager = GetComponent<OrderManager>();
+            
+            SpawnBuyer();
+        }
+
+        private void Update()
+        {
+            if (_buyerAnimationManager != null)
+            {
+                if (!_buyerAnimationManager.IsAnimationGoing && !_buyerAnimationManager.IsLeaving)
+                {
+                    _orderManager.GetNewOrder();
+                    _buyerAnimationManager = null;
+                }
+            }
         }
     }
 }
