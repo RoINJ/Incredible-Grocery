@@ -22,6 +22,7 @@ namespace GameControllerScripts
                     SoundManager.Instanse.PlaySound(moneySound, transform.position);
                     StartCoroutine(ScoreFade(_totalMoney, value - _totalMoney));
                     _totalMoney = value;
+                    SettingsManager.CurrentBalance = value;
                 }
             }
         }
@@ -45,11 +46,6 @@ namespace GameControllerScripts
         {
             _totalMoney = SettingsManager.CurrentBalance;
             balanceLabel.text = $"$ {_totalMoney}";
-        }
-
-        private void OnDestroy()
-        {
-            SettingsManager.CurrentBalance = _totalMoney;
         }
     }
 }

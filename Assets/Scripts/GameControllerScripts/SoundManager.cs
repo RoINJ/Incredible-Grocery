@@ -8,10 +8,19 @@ namespace GameControllerScripts
     
         public static SoundManager Instanse { get; private set; }
 
-        public bool IsSoundsEnabled { get; set; }
+        private bool _isSoundsEnabled;
+
+        public bool IsSoundsEnabled
+        {
+            get => _isSoundsEnabled;
+            set
+            {
+                _isSoundsEnabled = value;
+                SettingsManager.IsSoundsEnabled = value;
+            }
+        }
 
         private bool _isMusicEnabled;
-
         public bool IsMusicEnabled
         {
             get => _isMusicEnabled;
@@ -19,6 +28,7 @@ namespace GameControllerScripts
             {
                 _isMusicEnabled = value;
                 _audioSource.mute = !value;
+                SettingsManager.IsMusicEnabled = value;
             }
         }
 
@@ -44,12 +54,6 @@ namespace GameControllerScripts
         
             IsSoundsEnabled = SettingsManager.IsSoundsEnabled;
             IsMusicEnabled = SettingsManager.IsMusicEnabled;
-        }
-
-        private void OnDestroy()
-        {
-            SettingsManager.IsSoundsEnabled = IsSoundsEnabled;
-            SettingsManager.IsMusicEnabled = IsMusicEnabled;
         }
     }
 }
