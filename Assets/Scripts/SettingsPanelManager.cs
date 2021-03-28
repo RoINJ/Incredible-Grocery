@@ -18,6 +18,7 @@ public class SettingsPanelManager : MonoBehaviour
         {
             _isMusicEnabled = value;
             SetButtonState(musicButton, value);
+            SoundManager.Instanse.IsMusicEnabled = _isMusicEnabled;
         }
     }
 
@@ -29,14 +30,12 @@ public class SettingsPanelManager : MonoBehaviour
         {
             _isSoundsEnabled = value;
             SetButtonState(soundButton, value);
+            SoundManager.Instanse.IsSoundsEnabled = _isSoundsEnabled;
         }
     }
 
     public void Save()
     {
-        SoundManager.Instanse.IsMusicEnabled = _isMusicEnabled;
-        SoundManager.Instanse.IsSoundsEnabled = _isSoundsEnabled;
-        
         gameObject.SetActive(false);
     }
 
