@@ -16,11 +16,13 @@ namespace GameControllerScripts
 
         [SerializeField] private GameObject cloudPrefab;
 
+        private readonly Vector3 _cloudOffset = new Vector3(2, 2, 0);
+
         public async Task ShowNewOrder(Sprite[] products)
         {
-            var buyer = GameObject.FindWithTag("Buyer");
+            var buyer = GameObject.FindWithTag(Constants.Tags.Buyer);
         
-            var cloud = Instantiate(cloudPrefab, buyer.transform.position + new Vector3(2, 2, 0), Quaternion.identity);
+            var cloud = Instantiate(cloudPrefab, buyer.transform.position + _cloudOffset, Quaternion.identity);
 
             var productsRenderers = GetCloudSpriteRenderers(cloud);
 
@@ -29,14 +31,14 @@ namespace GameControllerScripts
                 productsRenderers[i].sprite = products[i];
             }
 
-            await Task.Delay(Constants.NEW_ORDER_CLOUD_DELAY);
+            await Task.Delay(Constants.Delays.NEW_ORDER_CLOUD_DELAY);
 
             Destroy(cloud);
         }
 
         public async Task ShowOrderConfirmation(Sprite[] products, bool[] results)
         {
-            var cloud = Instantiate(cloudPrefab, seller.transform.position + new Vector3(2, 2, 0), Quaternion.identity);
+            var cloud = Instantiate(cloudPrefab, seller.transform.position + _cloudOffset, Quaternion.identity);
 
             var productsRenderers = GetCloudSpriteRenderers(cloud);
 
@@ -45,12 +47,13 @@ namespace GameControllerScripts
                 productsRenderers[i].sprite = products[i];
             }
 
-            await Task.Delay(Constants.ORDER_CONFIRMATION_CLOUD_DELAY);
+            await Task.Delay(Constants.Delays.ORDER_CONFIRMATION_CLOUD_DELAY);
         
             for (int i = 0; i < products.Length; i++)
             {
                 var color = productsRenderers[i].color;
-                productsRenderers[i].color = new Color(color.r, color.g, color.b, 0.3f);
+                color.a = 0.3f;
+                productsRenderers[i].color = color;
 
                 var confirmationSpriteRenderer = Instantiate(new GameObject(), productsRenderers[i].transform)
                     .AddComponent<SpriteRenderer>();
@@ -59,19 +62,19 @@ namespace GameControllerScripts
                     ? acceptSprite
                     : declineSprite;
             
-                await Task.Delay(Constants.CHECK_ORDER_CLOUD_DELAY);
+                await Task.Delay(Constants.Delays.CHECK_ORDER_CLOUD_DELAY);
             }
 
-            await Task.Delay(Constants.ORDER_CONFIRMATION_CLOUD_DELAY);
+            await Task.Delay(Constants.Delays.ORDER_CONFIRMATION_CLOUD_DELAY);
         
             Destroy(cloud);
         }
     
         public async Task ShowBuyerReaction(bool value)
         {
-            var buyer = GameObject.FindWithTag("Buyer");
+            var buyer = GameObject.FindWithTag(Constants.Tags.Buyer);
         
-            var cloud = Instantiate(cloudPrefab, buyer.transform.position + new Vector3(2, 2, 0), Quaternion.identity);
+            var cloud = Instantiate(cloudPrefab, buyer.transform.position + _cloudOffset, Quaternion.identity);
 
             var renderers = GetCloudSpriteRenderers(cloud);
 
@@ -84,7 +87,7 @@ namespace GameControllerScripts
             Destroy(cloud);
         }
 
-        private SpriteRenderer[] GetCloudSpriteRenderers(GameObject cloud)
+        private static SpriteRenderer[] GetCloudSpriteRenderers(GameObject cloud)
         {
             return cloud.GetComponentsInChildren<SpriteRenderer>()
                 .Where(x => x.gameObject != cloud.gameObject)

@@ -49,7 +49,7 @@ namespace GameControllerScripts
         {
             Instanse = this;
         
-            _audioSource = GameObject.FindWithTag("GameController")
+            _audioSource = GameObject.FindWithTag(Constants.Tags.GameController)
                 .GetComponent<AudioSource>();
         
             IsSoundsEnabled = SettingsManager.IsSoundsEnabled || !SettingsManager.HasBeenLaunchedBefore;

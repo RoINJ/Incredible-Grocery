@@ -25,7 +25,7 @@ public class StorageManager : MonoBehaviour
 
     private void Start()
     {
-        var gameController = GameObject.FindWithTag("GameController");
+        var gameController = GameObject.FindWithTag(Constants.Tags.GameController);
         
         _productsManager = gameController.GetComponent<ProductsManager>();
         _orderManager = gameController.GetComponent<OrderManager>();

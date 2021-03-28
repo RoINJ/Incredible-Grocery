@@ -20,7 +20,7 @@ namespace GameControllerScripts
 
         public void LeaveBuyer()
         {
-            var buyerInstanse = GameObject.FindWithTag("Buyer");
+            var buyerInstanse = GameObject.FindWithTag(Constants.Tags.Buyer);
             _buyerAnimationManager = buyerInstanse.GetComponent<BuyerAnimationManager>();
             _buyerAnimationManager.LeaveBuyer();
         }
@@ -34,7 +34,7 @@ namespace GameControllerScripts
 
         private void Update()
         {
-            if (_buyerAnimationManager != null)
+            if (!(_buyerAnimationManager is null))
             {
                 if (!_buyerAnimationManager.IsAnimationGoing && !_buyerAnimationManager.IsLeaving)
                 {

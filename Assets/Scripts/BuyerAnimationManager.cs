@@ -29,11 +29,11 @@ public class BuyerAnimationManager : MonoBehaviour
 
     private void Start()
     {
-        _buyerManager = GameObject.FindWithTag("GameController")
+        _buyerManager = GameObject.FindWithTag(Constants.Tags.GameController)
             .GetComponent<BuyerManager>();
         
         _startPosition = transform.position;
-        _finalPostion = GameObject.FindWithTag("BuyerFinalPosition").transform.position;
+        _finalPostion = GameObject.FindWithTag(Constants.Tags.BuyerFinalPosition).transform.position;
 
         _spawnPosition = transform.position;
         
